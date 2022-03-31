@@ -397,7 +397,7 @@ def main():
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
 		
-		model_open = open('XGBModel.json', 'rb')
+		model_open = open('model/XGBModel.json', 'rb')
 		classifier = joblib.load(model_open)
 
 		if st.button('Show data'):
