@@ -3,7 +3,7 @@ import numpy as np
 import pickle
 import streamlit as st
 from PIL import Image
-from sklearn.externals import joblib
+import joblib
 import seaborn as sns
 import numpy as np
 import matplotlib.pyplot as plt
