@@ -400,7 +400,7 @@ def main():
 
 		
 		model_open = open('model/XGBModel.json', 'rb')
-		model_xgb = XGBClassifier()
+		#model_xgb = XGBClassifier()
 		classifier= model_xgb.load_model(model_open)
 
 		if st.button('Show data'):
