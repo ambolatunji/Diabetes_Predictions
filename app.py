@@ -326,7 +326,7 @@ def main():
 			st.text(confusion_matrix(y_test,y_predict_xgb))
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
-				bst.save_model('XGBModel.json')
+				model_xgb.save_model('XGBModel.json')
 				#joblib.dump(model_xgb,'model/XGBModel.ml')
 
 		elif pred_type=="ANN":
@@ -397,8 +397,11 @@ def main():
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
 		
+
+		
 		model_open = open('model/XGBModel.json', 'rb')
-		classifier = joblib.load(model_open)
+		model_xgb = XGBClassifier()
+		classifier= model_xgb.load_model(model_open)
 
 		if st.button('Show data'):
 			st.dataframe(data)
