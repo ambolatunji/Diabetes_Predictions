@@ -5,5 +5,5 @@ matplotlib
 seaborn
 numpy
 xgboost
-tensorflow-keras
+tensorflow keras
 PIL
