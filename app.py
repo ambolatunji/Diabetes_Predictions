@@ -326,7 +326,8 @@ def main():
 			st.text(confusion_matrix(y_test,y_predict_xgb))
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
-				joblib.dump(model_xgb,'model/XGBModel.ml')
+				bst.save_model('XGBModel.json')
+				#joblib.dump(model_xgb,'model/XGBModel.ml')
 
 		elif pred_type=="ANN":
 			st.write("### 7. Running Artificial Neural Network Model on Sample")
@@ -396,7 +397,7 @@ def main():
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
 		
-		model_open = open('XGB.ml', 'rb')
+		model_open = open('XGBModel.json', 'rb')
 		classifier = joblib.load(model_open)
 
 		if st.button('Show data'):
