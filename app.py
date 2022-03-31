@@ -397,7 +397,7 @@ def main():
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
 		
-		model_open = open('XGB.pkl', 'rb')
+		model_open = open('XGB.ml', 'rb')
 		classifier = joblib.load(model_open)
 
 		if st.button('Show data'):
@@ -454,8 +454,6 @@ def main():
 			else:
 				result = 'The performance is Outstanding'
 		st.success("{}".format(result))
-
-
 
 if __name__ == '__main__':
     main()
