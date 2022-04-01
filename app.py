@@ -403,7 +403,7 @@ def main():
 		model_open = open('model/XGBModel.json', 'rb')
 		#from xgboost import XGBClassifier
 		#model_xgb = XGBClassifier()
-		classifier= json.load_model(model_open)
+		classifier= json.loads(model_open)
 
 		if st.button('Show data'):
 			st.dataframe(data)
