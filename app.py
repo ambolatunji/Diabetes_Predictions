@@ -326,7 +326,7 @@ def main():
 			st.text(confusion_matrix(y_test,y_predict_xgb))
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
-				model_xgb.save_model('XGBModel.json')
+				model_xgb.save_model('model/XGBModel.json')
 				#joblib.dump(model_xgb,'model/XGBModel.ml')
 
 		elif pred_type=="ANN":
@@ -400,9 +400,9 @@ def main():
 
 		
 		model_open = open('model/XGBModel.json', 'rb')
-		from xgboost import XGBClassifier
-		model_xgb = XGBClassifier()
-		classifier= model_xgb.load_model(model_open)
+		#from xgboost import XGBClassifier
+		#model_xgb = XGBClassifier()
+		classifier= json.load_model(model_open)
 
 		if st.button('Show data'):
 			st.dataframe(data)
