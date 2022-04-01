@@ -408,7 +408,7 @@ def main():
 		#classifier= json.loads(model_open)
 		from sklearn.externals import joblib
 		model_open = open('XGB.ml', 'rb')
-		classifier = joblib.load(model
+		classifier = joblib.load(model_open)
 
 		if st.button('Show data'):
 			st.dataframe(data)
