@@ -400,8 +400,8 @@ def main():
 		
 
 		with open("model/XGBModel.json", 'rb') as model:
-			 Load its content and make a new dictionary
-			#classifier = json.dumps(model)
+			#Load its content and make a new dictionary
+			classifier = json.dumps(model)
 		#model_open = open('model/XGBModel.json', 'rb')
 		#from xgboost import XGBClassifier
 		#model_xgb = XGBClassifier()
