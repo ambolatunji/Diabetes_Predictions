@@ -399,9 +399,9 @@ def main():
 		#loading in the model to predict on the data
 		
 
-		with open("model/XGBModel.json") as model:
+		with open("model/XGBModel.json", 'r') as model:
 			# Load its content and make a new dictionary
-			classifier = json.load(model)
+			classifier = json.dumps(model)
 		#model_open = open('model/XGBModel.json', 'rb')
 		#from xgboost import XGBClassifier
 		#model_xgb = XGBClassifier()
