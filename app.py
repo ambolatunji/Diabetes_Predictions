@@ -399,11 +399,13 @@ def main():
 		#loading in the model to predict on the data
 		
 
-		
-		model_open = open('model/XGBModel.json', 'rb')
+		with open("model/XGBModel.json") as model:
+			# Load its content and make a new dictionary
+			classifier = json.dump(model)
+		#model_open = open('model/XGBModel.json', 'rb')
 		#from xgboost import XGBClassifier
 		#model_xgb = XGBClassifier()
-		classifier= json.loads(model_open)
+		#classifier= json.loads(model_open)
 
 		if st.button('Show data'):
 			st.dataframe(data)
