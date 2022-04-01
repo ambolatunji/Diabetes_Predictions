@@ -399,16 +399,16 @@ def main():
 		#loading in the model to predict on the data
 		
 
-		with open("model/XGBModel.json", 'rb') as model:
+		#with open("model/XGBModel.json", 'rb') as model:
 			#Load its content and make a new dictionary
-			classifier = json.dumps(model)
+			#classifier = json.dumps(model)
 		#model_open = open('model/XGBModel.json', 'rb')
 		#from xgboost import XGBClassifier
 		#model_xgb = XGBClassifier()
 		#classifier= json.loads(model_open)
-		#from sklearn.externals import joblib
-		#model_open = open('XGB.ml', 'rb')
-		#classifier = joblib.load(model
+		from sklearn.externals import joblib
+		model_open = open('XGB.ml', 'rb')
+		classifier = joblib.load(model
 
 		if st.button('Show data'):
 			st.dataframe(data)
