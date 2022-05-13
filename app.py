@@ -8,7 +8,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split, GridSearchCV
-from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix 
+from sklearn.metrics import precision_score, recall_score, f1_score
 # Custom classes 
 from pandas.api.types import is_numeric_dtype
 from utils import isNumerical
@@ -165,7 +166,7 @@ def main():
 				st.error("Warning! Y variable cannot be present in your X-variable.")
 
 		# Option to select predition type 
-		pred_type = st.radio("Select the type of process you want to run.",  options=["LR","SVM", "DT", "RF", "NB", "KNN", "XGBoost", "ANN", "LSTM_CNN"], help="Write about the models")
+		pred_type = st.radio("Select the type of process you want to run.",  options=["LR","SVM", "DT", "RF", "NB", "KNN", "XGBoost", "ANN"], help="Write about the models") #, "LSTM_CNN"],
 		# Add to model parameters
 		params = {'X': X_var, 'y': y_var, 'pred_type': pred_type,}
 		# Divide the data into test and train set 
@@ -195,9 +196,12 @@ def main():
 		with open('model/model_params.json', 'w') as json_file:
 			json.dump(params, json_file)
 		st.markdown("### RUNNING THE MACHINE LEARNING MODELS")
-
+		from PIL import Image
+		#opening the image
+		pr = Image.open('./Result/Performance Metrics.png')
+		st.image(pr, caption='Performance Metrics used in this project')
 		if pred_type == "LR":
-			st.write("### 1. Running Logistics Regression Model on Sample")		
+			st.write("### 1. Running Logistics Regression Algorithm on Sample")		
 			#Logistics regression model 
 			from sklearn.linear_model import LogisticRegression
 			model_logr = LogisticRegression()
@@ -205,34 +209,70 @@ def main():
 			#Predicting the model
 			y_predict_log = model_logr.predict(X_test)
 			# Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy score of LR is ', (accuracy_score(y_test,y_predict_log)))
-			st.markdown('### Classification report for LR')
-			st.text(classification_report(y_test,y_predict_log))
-			st.markdown('### Confusion Matrix for LR')
-			st.text(confusion_matrix(y_test,y_predict_log))
+			st.markdown('### Confusion Matrix for Logistic Regression')
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
+			lrcf=confusion_matrix(y_test,y_predict_log)
+			lrcf_data = pd.DataFrame(lrcf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(lrcf_data, annot=True, fmt="d")
+			ax.set_title('Logistic Regression Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+			#st.text(confusion_matrix(y_test,y_predict_log))
+			st.markdown('### Classification Report for Logistic Regression')			
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			#Plotting the Classification Report
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')
+			st.markdown(' #### Classification Result')
+			st.text(classification_report(y_test,y_predict_log,target_names=index))
+			st.write('The accuracy score of the application of Logistic Regression algorithm is ', (accuracy_score(y_test,y_predict_log)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			#Save Model
+			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
 				joblib.dump(model_logr,'model/LRModel.ml')
 
 		elif pred_type == "SVM":
-			st.write("### 2. Running Support Vector Machine Model on Sample")
+			st.write("### 2. Running Support Vector Machine Algorithm on Sample")
 			#Support Vector Machine Model
 			from sklearn.svm import SVC
 			model_svc = SVC(kernel='rbf', C=100, random_state=10).fit(X_train,y_train)
 			#Predicting the model
 			y_predict_svm = model_svc.predict(X_test)
 			#Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy of SVC is ', (accuracy_score(y_test,y_predict_svm)))
-			st.markdown('### Classification report')
-			st.text(classification_report(y_test,y_predict_svm))
-			st.markdown('### Confusion Matrix for SVC')
-			st.text(confusion_matrix(y_test,y_predict_svm))
+			st.markdown('### Confusion Matrix for Support Vector Machine')
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
+			svmcf=confusion_matrix(y_test,y_predict_svm)
+			svmcf_data = pd.DataFrame(svmcf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(svmcf_data, annot=True, fmt="d")
+			ax.set_title('Support Vector Machine Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+			#st.text(confusion_matrix(y_test,y_predict_svm))
+			st.markdown('### Classification Report')
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')
+			st.markdown(' #### Classification Result')
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			st.text(classification_report(y_test,y_predict_svm, target_names=index))
+			st.write('The accuracy score for the application of Support Vector Machine algorithm is ', (accuracy_score(y_test,y_predict_svm)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			st.markdown('### SAVE MODEL')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
 				joblib.dump(model_svc,'model/SVCModel.ml')
 
 		elif pred_type=="DT":
-			st.write("### 3. Running Decisin Tree with GridSearchCV Model on Sample")
+			st.write("### 3. Running Decision Tree with GridSearchCV Algorithm on Sample")
 			#Decisin Tree with GridSearchCV Model
 			from sklearn.tree import DecisionTreeClassifier
 			classifier_dtg=DecisionTreeClassifier(random_state=42,splitter='best')
@@ -243,39 +283,74 @@ def main():
 			#Predicting the model
 			y_predict_dtree = model_griddtree.predict(X_test)
 			#Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy of DTwithGridSearchCV is ', (accuracy_score(y_test,y_predict_dtree)))
-			st.markdown('### Classification report')
-			st.text(classification_report(y_test,y_predict_dtree))
 			st.markdown('### Confusion Matrix for DTwithGridSearchCV')
-			st.text(confusion_matrix(y_test,y_predict_dtree))
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
+			dtcf=confusion_matrix(y_test,y_predict_dtree)
+			dtcf_data = pd.DataFrame(dtcf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(dtcf_data, annot=True, fmt="d")
+			ax.set_title('DTwithGridSearchCV Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+
+			#st.text(confusion_matrix(y_test,y_predict_dtree))
+			st.markdown('### Classification report of DTwithGridSearchCV')
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')
+			st.markdown('#### Classification Result')
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			st.text(classification_report(y_test,y_predict_dtree, target_names=index))
+			st.write('The accuracy score for the application of DTwithGridSearchCV Algorithm is ', (accuracy_score(y_test,y_predict_dtree)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
 				joblib.dump(model_griddtree,'model/DTgridTreeModel.ml')
 
 		elif pred_type=="RF":
-			st.write("### 4. Running Random Forest with GridSearchCV Model on Sample")
+			st.write("### 4. Running Random Forest with GridSearchCV Algorithm on Sample")
 			#Random Forest with GridSearchCV Model
 			from sklearn.ensemble import RandomForestClassifier
 			classifier_rfg=RandomForestClassifier(random_state=33,n_estimators=23)
 			parameters=[{'min_samples_split':[2,3,4,5],'criterion':['gini','entropy'],'min_samples_leaf':[1,2,3]}]
 			model_gridrf=GridSearchCV(estimator=classifier_rfg, param_grid=parameters, scoring='accuracy',cv=10)
 			model_gridrf.fit(X_train,y_train)
-			model_griddrf.best_params_
+			model_gridrf.best_params_
 			#Predicting the model
 			y_predict_rf = model_gridrf.predict(X_test)
 			#Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy of RFwithGridSearchCV is ', (accuracy_score(y_test,y_predict_rf)))
-			st.markdown('### Classification report')
-			st.text(classification_report(y_test,y_predict_rf))
 			st.markdown('### Confusion Matrix for RFwithGridSearchCV')
-			st.text(confusion_matrix(y_test,y_predict_rf))
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
+			rfcf=confusion_matrix(y_test,y_predict_rf)
+			rfcf_data = pd.DataFrame(rfcf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(rfcf_data, annot=True, fmt="d")
+			ax.set_title('RFwithGridSearchCV Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+			#st.text(confusion_matrix(y_test,y_predict_rf))
+			st.markdown('### Classification report')
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')
+			st.markdown('#### Classification Result')
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			st.text(classification_report(y_test,y_predict_rf, target_names= index))
+			st.write('The accuracy score for the application of RFwithGridSearchCV algorithm is ', (accuracy_score(y_test,y_predict_rf)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
-				joblib.dump(model_griddtree,'model/RFgridTreeModel.ml')
+				joblib.dump(model_gridrf,'model/RFgridTreeModel.ml')
 
 
 		elif pred_type=="NB":
-			st.write("### 5. Running Naive Bayes Model on Sample")
+			st.write("### 5. Running Naive Bayes Algorithm on Sample")
 			#Naive bayes Model
 			from sklearn.naive_bayes import BernoulliNB
 			model_nb = BernoulliNB()
@@ -283,11 +358,28 @@ def main():
 			#Predicting the model
 			y_predict_nb = model_nb.predict(X_test)
 			#Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy of Naive Bayes is ', (accuracy_score(y_test,y_predict_nb)))
-			st.markdown('### Classification report')
-			st.text(classification_report(y_test,y_predict_nb))
 			st.markdown('### Confusion Matrix for Naive Bayes')
-			st.text(confusion_matrix(y_test,y_predict_nb))
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
+			nbcf=confusion_matrix(y_test,y_predict_nb)
+			nbcf_data = pd.DataFrame(nbcf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(nbcf_data, annot=True, fmt="d")
+			ax.set_title('Naive Bayes Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+			#st.text(confusion_matrix(y_test,y_predict_nb))
+			st.markdown('### Classification Report of Naive Bayes Algorithm')
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')
+			st.markdown('#### Classification Result')
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			st.text(classification_report(y_test,y_predict_nb, target_names=index))
+			st.write('The accuracy score for the application of Naive Bayes Algorithm is ', (accuracy_score(y_test,y_predict_nb)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
 				joblib.dump(model_nb,'model/NBModel.ml')
@@ -301,17 +393,36 @@ def main():
 			#Predicting the model
 			y_predict_knn = model_knn.predict(X_test)
 			#Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy of KNN is ', (accuracy_score(y_test,y_predict_knn)))
-			st.markdown('### Classification report')
-			st.text(classification_report(y_test,y_predict_knn))
-			st.markdown('### Confusion Matrix for KNN')
-			st.text(confusion_matrix(y_test,y_predict_knn))
+			st.markdown('### Confusion Matrix for K-Nearest Neighbour')
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
+			knncf=confusion_matrix(y_test,y_predict_knn)
+			knncf_data = pd.DataFrame(knncf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(knncf_data, annot=True, fmt="d")
+			ax.set_title('K-Nearest Neighbour Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+
+			#st.text(confusion_matrix(y_test,y_predict_knn))
+			st.markdown('### Classification Report of K-Nearest Neighbour Algorithm')
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')
+			st.markdown('### Classification Result')
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			st.text(classification_report(y_test,y_predict_knn, target_names=index))
+			st.write('The accuracy score for the application of K-Nearest Neighbour Algorithm is ', (accuracy_score(y_test,y_predict_knn)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			
+			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
 				joblib.dump(model_knn,'model/KNNModel.ml')
 
 		elif pred_type=="XGBoost":
-			st.write("### 7. Running XGBoost Classifer Model on Sample")
+			st.write("### 7. Running XGBoost Classifer Algorithm on Sample")
 			#XGBOOST Model
 			from xgboost import XGBClassifier
 			model_xgb = XGBClassifier()
@@ -319,17 +430,36 @@ def main():
 			#Predicting the model
 			y_predict_xgb = model_xgb.predict(X_test)
 			#Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy of XGBoost is ', (accuracy_score(y_test,y_predict_xgb)))
-			st.markdown('### Classification report')
-			st.text(classification_report(y_test,y_predict_xgb))
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
 			st.markdown('### Confusion Matrix for XGBoost')
-			st.text(confusion_matrix(y_test,y_predict_xgb))
+			xgbcf=confusion_matrix(y_test,y_predict_xgb)
+			xgbcf_data = pd.DataFrame(xgbcf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(xgbcf_data, annot=True, fmt="d")
+			ax.set_title('XGBoost Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+
+			#st.text(confusion_matrix(y_test,y_predict_xgb))
+			st.markdown('### Classification Report of the application of XGBoost')
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')			
+			st.markdown('#### Classification Result')
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			st.text(classification_report(y_test,y_predict_xgb, target_names=index))
+			st.write('The accuracy score for the application of XGBoost Algorthm is ', (accuracy_score(y_test,y_predict_xgb)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
+				#model_xgb.save_model('model/XGBModel.json')
 				joblib.dump(model_xgb,'model/XGBModel.ml')
 
 		elif pred_type=="ANN":
-			st.write("### 7. Running Artificial Neural Network Model on Sample")
+			st.write("### 7. Running Artificial Neural Network Algorithm on Sample")
 			#ANN Model
 			from sklearn.neural_network import MLPClassifier
 			model_mlp = MLPClassifier(hidden_layer_sizes=(100,100,100),batch_size=10,learning_rate_init=0.01,max_iter=2000,random_state=10)
@@ -337,11 +467,28 @@ def main():
 			#Predicting the model
 			y_predict_mlp = model_mlp.predict(X_test)
 			#Finding accuracy, precision, recall and confusion matrix
-			st.write('The accuracy of ANN is ', (accuracy_score(y_test,y_predict_mlp)))
-			st.markdown('### Classification report')
-			st.text(classification_report(y_test,y_predict_mlp))
-			st.markdown('### Confusion Matrix for ANN')
-			st.text(confusion_matrix(y_test,y_predict_mlp))
+			st.markdown('### Confusion Matrix for Artificial Neural Network')
+			st.write('The Confusion Matrix is used to know the performance of a Machine learning classification. It is represented in a matrix form. Confusion Matrix gives a comparison between Actual and predicted values.')
+			mlpcf=confusion_matrix(y_test,y_predict_mlp)
+			mlpcf_data = pd.DataFrame(mlpcf,
+										 index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'], 
+										 columns = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding'])
+			#Plotting the Confusion Matrix
+			f4, ax=plt.subplots(figsize=(15,10))
+			sns.heatmap(mlpcf_data, annot=True, fmt="d")
+			ax.set_title('Artificial Neural Network Confusion Matrix')
+			ax.set_ylabel('Actual Values')
+			ax.set_xlabel('Predicted Values')
+			st.pyplot(f4)
+			#st.text(confusion_matrix(y_test,y_predict_mlp))
+			st.markdown('### Classification Report for the application of Artificial Neural Network')
+			st.write('A Classification report is used to measure the quality of predictions from a classification algorithm. How many predictions are True and how many are False. More specifically, True Positives, False Positives, True negatives and False Negatives are used to predict the metrics of a classification report as shown below')
+			st.markdown('### Classification Result')
+			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
+			st.text(classification_report(y_test,y_predict_mlp, target_names=index))
+			st.write('The accuracy score for the application of Artificial Neural Network Algorithm is ', (accuracy_score(y_test,y_predict_mlp)))
+			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
+			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
 				joblib.dump(model_mlp,'model/ANNModel.ml')
@@ -395,7 +542,7 @@ def main():
 		st.title('Prediction')
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
-		
+		from sklearn.externals import joblib
 		model_open = open('XGB.ml', 'rb')
 		classifier = joblib.load(model_open)
 
