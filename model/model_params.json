@@ -1,1 +1,1 @@
-{"X": ["Education"], "y": "PerformanceRating", "pred_type": "LR"}
+{"X": ["Education", "Tenureinthecompany", "PrevousExpinMonths", "SalesPlanningandForecasting", "SolvingProblems"], "y": "PerformanceRating", "pred_type": "ANN"}
