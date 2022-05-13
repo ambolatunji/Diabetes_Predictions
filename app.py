@@ -456,13 +456,13 @@ def main():
 			st.markdown('### Save Model')
 			if st.button('SAVE MODEL'):
 				#Exporting the trained model
-<<<<<<< HEAD
+
 				#model_xgb.save_model('model/XGBModel.json')
 				joblib.dump(model_xgb,'model/XGBModel.ml')
-=======
-				model_xgb.save_model('model/XGBModel.json')
+
+				#model_xgb.save_model('model/XGBModel.json')
 				#joblib.dump(model_xgb,'model/XGBModel.ml')
->>>>>>> 3be6b090cb6394eadebd35240a64ac14f606d474
+
 
 		elif pred_type=="ANN":
 			st.write("### 7. Running Artificial Neural Network Algorithm on Sample")
@@ -548,9 +548,6 @@ def main():
 		st.title('Prediction')
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
-<<<<<<< HEAD
-=======
-		
 
 		#with open("model/XGBModel.json", 'rb') as model:
 			#Load its content and make a new dictionary
@@ -559,7 +556,7 @@ def main():
 		#from xgboost import XGBClassifier
 		#model_xgb = XGBClassifier()
 		#classifier= json.loads(model_open)
->>>>>>> 3be6b090cb6394eadebd35240a64ac14f606d474
+
 		from sklearn.externals import joblib
 		model_open = open('XGB.ml', 'rb')
 		classifier = joblib.load(model_open)
