@@ -4,6 +4,6 @@ streamlit
 matplotlib
 seaborn
 numpy
-xgboost
+xgboost==0.90
 tensorflow 
 keras
