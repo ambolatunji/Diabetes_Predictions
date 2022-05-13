@@ -425,10 +425,6 @@ def main():
 		elif pred_type=="XGBoost":
 			st.write("### 7. Running XGBoost Classifer Algorithm on Sample")
 			#XGBOOST Model
-			from sklearn.preprocessing import LabelEncoder
-			le = LabelEncoder()
-			y_train = le.fit_transform(y_train)
-			#XGBOOST Model
 			from xgboost import XGBClassifier
 			model_xgb = XGBClassifier()
 			model_xgb.fit(X_train,y_train)
