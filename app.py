@@ -18,6 +18,7 @@ import os
 import warnings
 import json
 warnings.filterwarnings('ignore')
+@st.cache
 
 def main():
 
@@ -37,6 +38,7 @@ def main():
 
 		if st.checkbox('Show raw Data'):
 			st.dataframe(data)
+			@st.cache
 	elif page =='Data Exploration':
 		st.title('Explore the dataset')
 		if st.checkbox('Show raw Data'):
@@ -167,6 +169,7 @@ def main():
 				st.error("Warning! Y variable cannot be present in your X-variable.")
 
 		# Option to select predition type 
+		@st.cache
 		pred_type = st.radio("Select the type of process you want to run.",  options=["LR","SVM", "DT", "RF", "NB", "KNN", "XGBoost", "ANN"], help="Write about the models") #, "LSTM_CNN"],
 		# Add to model parameters
 		params = {'X': X_var, 'y': y_var, 'pred_type': pred_type,}
@@ -545,6 +548,7 @@ def main():
 				joblib.dump(model_,'LSTM_CNN_Model.ml')
 			
 	else:
+		@st.cache
 		st.title('Prediction')
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
@@ -560,6 +564,7 @@ def main():
 		from sklearn.externals import joblib
 		model_open = open('XGB.ml', 'rb')
 		classifier = joblib.load(model_open)
+		@st.cache
 
 		if st.button('Show data'):
 			st.dataframe(data)
