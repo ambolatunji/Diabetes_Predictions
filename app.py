@@ -38,7 +38,7 @@ def main():
 
 		if st.checkbox('Show raw Data'):
 			st.dataframe(data)
-			@st.cache
+	@st.cache
 	elif page =='Data Exploration':
 		st.title('Explore the dataset')
 		if st.checkbox('Show raw Data'):
