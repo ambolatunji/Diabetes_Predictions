@@ -169,7 +169,6 @@ def main():
 				st.error("Warning! Y variable cannot be present in your X-variable.")
 
 		# Option to select predition type 
-		@st.cache
 		pred_type = st.radio("Select the type of process you want to run.",  options=["LR","SVM", "DT", "RF", "NB", "KNN", "XGBoost", "ANN"], help="Write about the models") #, "LSTM_CNN"],
 		# Add to model parameters
 		params = {'X': X_var, 'y': y_var, 'pred_type': pred_type,}
