@@ -17,8 +17,9 @@ from utils import isNumerical
 import os
 import warnings
 import json
-warnings.filterwarnings('ignore')
 @st.cache
+warnings.filterwarnings('ignore')
+
 
 def main():
 
