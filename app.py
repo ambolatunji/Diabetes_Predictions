@@ -562,7 +562,6 @@ def main():
 		from sklearn.externals import joblib
 		model_open = open('XGB.ml', 'rb')
 		classifier = joblib.load(model_open)
-		@st.cache
 
 		if st.button('Show data'):
 			st.dataframe(data)
