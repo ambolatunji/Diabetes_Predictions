@@ -547,7 +547,6 @@ def main():
 				joblib.dump(model_,'LSTM_CNN_Model.ml')
 			
 	else:
-		@st.cache
 		st.title('Prediction')
 		st.markdown('Input values in the form below for prediction, Dont mind the long input, just to ensure the right prediction')
 		#loading in the model to predict on the data
