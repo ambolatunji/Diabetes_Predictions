@@ -284,9 +284,6 @@ def main():
 			st.markdown(' #### Classification Result')
 			st.text(classification_report(y_test,y_predict_log,target_names=index))
 			st.write('The accuracy score of the application of Logistic Regression algorithm is ', (accuracy_score(y_test,y_predict_log)))
-			st.write('The Precision score of the application of Logistic Regression algorithm is ', (precision_score(y_test,y_predict_log, average='micro')))
-			st.write('The Recall score of the application of Logistic Regression algorithm is ', (recall_score(y_test,y_predict_log, average='micro')))
-			st.write('The F1 score of the application of Logistic Regression algorithm is ', (F1_score(y_test,y_predict_log, average='micro')))
 			
 			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
 			#Save Model
