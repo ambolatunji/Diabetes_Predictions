@@ -284,9 +284,9 @@ def main():
 			st.markdown(' #### Classification Result')
 			st.text(classification_report(y_test,y_predict_log,target_names=index))
 			st.write('The accuracy score of the application of Logistic Regression algorithm is ', (accuracy_score(y_test,y_predict_log)))
-			st.write('The Precision score of the application of Logistic Regression algorithm is ', (precision_score(y_test,y_predict_log)))
-			st.write('The Recall score of the application of Logistic Regression algorithm is ', (recall_score(y_test,y_predict_log)))
-			st.write('The F1 score of the application of Logistic Regression algorithm is ', (F1_score(y_test,y_predict_log)))
+			st.write('The Precision score of the application of Logistic Regression algorithm is ', (precision_score(y_test,y_predict_log, average='binary')))
+			st.write('The Recall score of the application of Logistic Regression algorithm is ', (recall_score(y_test,y_predict_log, average='binary')))
+			st.write('The F1 score of the application of Logistic Regression algorithm is ', (F1_score(y_test,y_predict_log, average='binary')))
 			
 			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
 			#Save Model
@@ -323,9 +323,9 @@ def main():
 			index = ['Worse', 'Low', 'Good', 'Excellent', 'Outstanding']
 			st.text(classification_report(y_test,y_predict_svm, target_names=index))
 			st.write('The accuracy score for the application of Support Vector Machine algorithm is ', (accuracy_score(y_test,y_predict_svm)))
-			st.write('The Precision score for the application of Support Vector Machine algorithm is ', (precision_score(y_test,y_predict_svm)))
-			st.write('The Recall score for the application of Support Vector Machine algorithm is ', (recall_score(y_test,y_predict_svm)))
-			st.write('The F1 score for the application of Support Vector Machine algorithm is ', (f1_score(y_test,y_predict_svm)))
+			st.write('The Precision score for the application of Support Vector Machine algorithm is ', (precision_score(y_test,y_predict_svm, average='binary')))
+			st.write('The Recall score for the application of Support Vector Machine algorithm is ', (recall_score(y_test,y_predict_svm, average='binary')))
+			st.write('The F1 score for the application of Support Vector Machine algorithm is ', (f1_score(y_test,y_predict_svm, average='binary')))
 			st.write('So from the above results from the Precision, Recall, F1-Score, were displayed.  The support is the number of data samples used in the report')
 			st.markdown('### SAVE MODEL')
 			if st.button('SAVE MODEL'):
