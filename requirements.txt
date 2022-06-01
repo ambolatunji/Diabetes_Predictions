@@ -1,9 +1,11 @@
-scikit-learn==0.22
-pandas
+scikit-learn==0.20.1
+pandas==0.25.3
 streamlit
 matplotlib
 seaborn
-numpy
+numpy==1.19.2
 xgboost==0.90
 tensorflow 
 keras
+python==3.6.9
+
