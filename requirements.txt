@@ -1,3 +1,4 @@
+python==3.6.9
 scikit-learn==0.20.1
 pandas==0.25.3
 streamlit
@@ -7,5 +8,3 @@ numpy==1.19.2
 xgboost==0.90
 tensorflow 
 keras
-python==3.6.9
-
