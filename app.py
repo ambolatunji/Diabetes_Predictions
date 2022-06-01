@@ -28,7 +28,7 @@ def main():
 	page= st.sidebar.selectbox("Choose a page", ['Homepage', 'Data Exploration', 'Data Analysis', 'Modelling', 'Prediction'])
 
 	if page == 'Homepage':
-		st.title('Employee Performance Prediction :computer:')
+		st.title('Employee Performance Prediction:computer:')
 		st.markdown('👈Select a page in the sidebar')
 		st.markdown('This application performs machine learning predictions on Employee Performance and outputs the predictions.')
 
@@ -107,9 +107,9 @@ def main():
 			st.pyplot(f)
 
 	elif page=='Data Analysis':	
-		st.markdown('### Since Education has the highest correlation Matrix')
-		st.markdown('### We Analyse Education with Performance Rating')
-		if st.checkbox('Column Performance'):
+		st.markdown('### Analysis of the Highest Correlation Matrix Column with Performance Rating')
+		
+		if st.checkbox('Education Column Performance'):
 			# A new pandas Dataframe is created to analyze Education wise performance as asked.
 			edu = data.iloc[:,[3,25]].copy()
 			edu_per = edu.copy()
@@ -121,15 +121,65 @@ def main():
 			edu_per = edu.copy()
 			f, ax =plt.subplots(figsize=(10,4.5))
 			sns.barplot(edu_per['Education'],edu_per['PerformanceRating'])
+
 			st.pyplot(f)
 
-		if st.checkbox('Education analyzed seperately'):
-			edu = data.iloc[:,[3,25]].copy()
-			edu_per = edu.copy()
-			# Analyze each Education separately
-			ed= edu_per.groupby(by='Education')['PerformanceRating'].value_counts()
-			st.write(ed)
-		if st.checkbox('BarPlot for Education analyzed seperately'):
+		#if st.checkbox('Education analyzed seperately'):
+		#	edu = data.iloc[:,[3,25]].copy()
+		#	edu_per = edu.copy()
+		#	# Analyze each Education separately
+		#	ed= edu_per.groupby(by='Education')['PerformanceRating'].value_counts()
+		#	st.write(ed)
+
+# A new pandas Dataframe is created to analyze TIC wise performance as asked.
+		if st.checkbox('Tenure in the company Column Performance'):
+			tic = data.iloc[:,[4,25]].copy()
+			tic_per = tic.copy()
+			# Finding out the mean performance of all the Tenure used in the company and plotting its bar graph using seaborn.
+			tic1 = tic_per.groupby(by='Tenureinthecompany')['PerformanceRating'].agg(['mean', 'sum', 'count'])
+			st.write(tic1)
+		if st.checkbox('Tenure in the company Bar Chart'):
+			tic = data.iloc[:,[4,25]].copy()
+			tic_per = tic.copy()
+			f, ax =plt.subplots(figsize=(10,4.5))
+			sns.barplot(tic_per['Tenureinthecompany'],tic_per['PerformanceRating'])
+			st.pyplot(f)
+
+
+		# A new pandas Dataframe is created to analyze Experience in Months wise performance as asked.
+		import random
+		if st.checkbox('Prevous Exp in Months Column Performance'):	
+			pem = data.iloc[:,[5,25]].copy()
+			pem_per = pem.copy()
+			# Finding out the mean performance of all the previous experience and plotting its bar graph using seaborn.
+			pem1 = pem_per.groupby(by='PrevousExpinMonths')['PerformanceRating'].agg(['mean', 'sum', 'count'])
+			st.write(pem1)
+		if st.checkbox('Prevous Exp in Months Scatter Plot'):
+			pem = data.iloc[:,[5,25]].copy()
+			pem_per = pem.copy()
+			f, ax =plt.subplots(figsize=(10,4.5))
+			plt.scatter(pem_per['PrevousExpinMonths'],pem_per['PerformanceRating'])
+			plt.title("PrevousExpinMonths Scatterplot")
+			plt.xlabel("PrevousExpinMonths")
+			plt.ylabel("erformanceRating")
+			st.pyplot(f)
+
+		# A new pandas Dataframe is created to analyze Team Commitment wise performance as asked.	
+		if st.checkbox('Team Commitment Column Performance'):	
+			tc = data.iloc[:,[6,25]].copy()
+			tc_per = tc.copy()
+			# Finding out the mean performance of all the previous experience and plotting its bar graph using seaborn.
+			tc1 = tc_per.groupby(by='BuildingTeamCommitment')['PerformanceRating'].agg(['mean', 'sum', 'count'])
+			st.write(pem1)
+		if st.checkbox('Team Commitment Bar Chart'):
+			tc = data.iloc[:,[6,25]].copy()
+			tc_per = tc.copy()
+			f, ax =plt.subplots(figsize=(10,4.5))
+			sns.barplot(tc_per['BuildingTeamCommitment'],tc_per['PerformanceRating'])
+			st.pyplot(f)
+
+
+		"""if st.checkbox('BarPlot for Education analyzed seperately'):
 		# Creating a new dataframe to analyze each Education separately	
 			edu = data.iloc[:,[3,25]].copy()
 			edu_per = edu.copy()
@@ -149,7 +199,7 @@ def main():
 			st.pyplot(f)
 			st.pyplot(f0)
 			st.pyplot(f1)
-			st.pyplot(f2)
+			st.pyplot(f2)"""
 
 	elif page == 'Modelling': 
 		st.title('Model Application')
