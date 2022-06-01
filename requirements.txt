@@ -4,7 +4,7 @@ pandas==0.25.3
 streamlit
 matplotlib
 seaborn
-numpy==1.19.2
+numpy
 xgboost==0.90
 tensorflow 
 keras
