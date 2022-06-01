@@ -1,6 +1,5 @@
-python==3.6.9
 scikit-learn==0.20.1
-pandas==0.25.3
+pandas
 streamlit
 matplotlib
 seaborn
