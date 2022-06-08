@@ -7,3 +7,4 @@ numpy
 xgboost==0.90
 tensorflow 
 keras
+joblib
