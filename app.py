@@ -218,8 +218,6 @@ def main():
 			# Check if y not in X 
 			if y_var in X_var:
 				st.error("Warning! Y variable cannot be present in your X-variable.")
-		if len(y_var)==0:
-			st.error("You have to put in some Y variable and it cannot be left empty.")
 			
 		# Option to select predition type 
 		pred_type = st.radio("Select the type of process you want to run.",  options=["LR","SVM", "DT", "RF", "NB", "KNN", "XGBoost", "ANN"], help="Write about the models") #, "LSTM_CNN"],
