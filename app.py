@@ -634,7 +634,7 @@ def main():
 		PrevousExpinMonths = st.number_input("Previous Experience in Months")
 		BuildingTeamCommitment = st.slider("Team Commitment", min_value=1.0, max_value=5.0, value=1.0, step=0.1, format='%f')
 		StrategicThinking = st.slider("Strategic Thinking", min_value=1.0, max_value=5.0, value=1.0, step=0.1, format='%f')
-		LeadsDecisionMakingandDeliversResults = st.slider("Decision Making and Resut Delivery", min_value=1.0, max_value=5.0, value=1.0, step=0.1, format='%f')
+		LeadsDecisionMakingandDeliversResults = st.slider("Decision Making and Result Delivery", min_value=1.0, max_value=5.0, value=1.0, step=0.1, format='%f')
 		AnalyticalThinking = st.slider("Analytical Thinking", min_value=1.0, max_value=5.0, value=1.0, step=0.1, format='%f')
 		CustomerRelations = st.slider("Customer Relations", min_value=1.0, max_value=5.0, value=1.0, step=0.1, format='%f')
 		ServiceQualityandPlanning = st.slider("Quality of Service and Plannig", min_value=1.0, max_value=5.0, value=1.0, step=0.1, format='%f')
