@@ -611,7 +611,7 @@ def main():
 		#model_xgb = XGBClassifier()
 		#classifier= json.loads(model_open)
 
-		from sklearn.externals import joblib
+		
 		model_open = open('XGB.ml', 'rb')
 		classifier = joblib.load(model_open)
 
