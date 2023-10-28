@@ -612,7 +612,9 @@ def main():
 		#classifier= json.loads(model_open)
 
 		
-		model_open = open('XGB.ml', 'rb')
+		#model_open = open('XGB.ml', 'rb')
+		#classifier = joblib.load(model_open)
+		model_open = open('RFwithGS.ml', 'rb')
 		classifier = joblib.load(model_open)
 
 		if st.button('Show data'):
