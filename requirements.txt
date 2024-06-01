@@ -1,10 +1,12 @@
-#scikit-learn==0.20.1
+scikit-learn==0.20.1
 pandas
 streamlit
 matplotlib
 seaborn
 numpy
-#xgboost==0.90
+xgboost==1.2.0
 tensorflow 
 keras
 joblib
+pandas
+streamlit
